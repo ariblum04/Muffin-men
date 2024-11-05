@@ -45,7 +45,7 @@ void ledLight() {
 
 void piezoControl() {
   if (timer > 0) { // Keep the piezo tone for the duration of the timer
-    tone(piezoPin, 1000 + timer);  // Play tone
+    tone(piezoPin, 1500 + timer);  // Play tone
     timer--;  // Decrement the timer smoothly
   } else {
     noTone(piezoPin);  // Stop the piezo when timer reaches 0
@@ -60,7 +60,7 @@ void loop() {
   if (buttonBool) {  // Only check vibration when the device is on
     sensorVal = analogRead(sensorPin);  // Read the vibration sensor value
 
-    if (sensorVal > 1000) {  // If vibration exceeds threshold
+    if (sensorVal > 1200) {  // If vibration exceeds threshold
       timer = 600;  
     }
   } else {
