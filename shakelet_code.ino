@@ -1,3 +1,6 @@
+//confusion
+
+
 int sensorVal;
 //setting pin numbers
 const int sensorPin = A4; // the vibration sensor is connected to analog pin A4
