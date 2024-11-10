@@ -1,49 +1,57 @@
 #include <Servo.h>
 
-//setup for copper tape switchs
-const int switchPin1 = 1;
-const int switchPin2 = 2;
-const int switchPin3 = 3;
-const int switchPin4 = 4;
-const int switchPin5 = 5;
-const int switchPin6 = 6;
-int switchVal1;
-int switchVal2;
-int switchVal3;
-int switchVal4;
-int switchVal5;
-int switchVal6;
+// Initialize switches
+const int switchPin1 = 2;  // Farquaad circle
+const int switchPin2 = 3;  // Gingerbread in trash
+const int switchPin3 = 4;  // Farquaad at mirror
+const int princessChoicePin = 5;  // Princess choice button
 
-//servo set ups
-Servo tableServo; 
-Servo mirrorServo;
-Servo floorServo;
-Servo happyServo;
+// Initialize LEDs
+const int ledRed1 = 6;
+const int ledRed2 = 7;
+const int ledGreen = 8;
 
-//led set up
-const int ledPin1 = 7;
-const int ledPin2 = 8;
-const int ledPin3 = 9;
+// Initialize variables to track positions and choices
+bool Farquaad_Position = false;
+bool Gingerbread_Position = false;
+String Princess_Choice = "none";
+
+// Initialize Servos
+Servo tableServo;    // Reveal table
+Servo mirrorServo;   // Rotate mirror
+Servo flapServo;     // Spin up flap
+Servo fireworkServo;      // Flip up fireworks
 
 void setup() {
-  //set switches as inputs
+  // Set up switches as inputs
   pinMode(switchPin1, INPUT);
   pinMode(switchPin2, INPUT);
   pinMode(switchPin3, INPUT);
-  pinMode(switchPin4, INPUT);
-  pinMode(switchPin5, INPUT);
-  pinMode(switchPin6, INPUT);
+  pinMode(princessChoicePin, INPUT);
 
-  //set servo as outputs
-  tableServo.attach(10); // pin 10
-  mirrorServo.attach(11); // pin 11
-  floorServo.attach(12); // pin 12
-  happyServo.attach(13); // pin 13
+  // Set up LEDs as outputs
+  pinMode(ledRed1, OUTPUT);
+  pinMode(ledRed2, OUTPUT);
+  pinMode(ledGreen, OUTPUT);
 
-  //set leds as outputs
-  pinMode(ledPin1, OUTPUT); 
-  pinMode(ledPin2, OUTPUT);
-  pinMode(ledPin3, OUTPUT);
+  // Attach servos to their respective pins
+  tableServo.attach(9);     // Servo pin 9
+  mirrorServo.attach(10);    // Servo pin 10
+  flapServo.attach(11);      // Servo pin 11
+  fireworkServo.attach(12);       // Servo pin 12
+
+  // Initialize all components to default positions
+  tableServo.write(0);
+  mirrorServo.write(0);
+  flapServo.write(0);
+  fireworkServo.write(0);
+
+  // Initialize LEDs as off
+  digitalWrite(ledRed1, LOW);
+  digitalWrite(ledRed2, LOW);
+  digitalWrite(ledGreen, LOW);
+  
+  Serial.begin(9600); // For debugging
 }
 
 void loop() {
@@ -53,6 +61,4 @@ void loop() {
   switchVal4 = digitalRead(switchPin4);
   switchVal5 = digitalRead(switchPin5);
   switchVal6 = digitalRead(switchPin6);
-
-
 }
