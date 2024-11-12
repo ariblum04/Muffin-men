@@ -4,17 +4,19 @@
 const int switchPin1 = 2;  // Farquaad circle
 const int switchPin2 = 3;  // Gingerbread in trash
 const int switchPin3 = 4;  // Farquaad at mirror
-const int princessChoicePin = 5;  // Princess choice button
+const int switchPin4 = 5;  // Princess choice 1
+const int switchPin5 = 6;  // Princess choice 1
+const int switchPin6 = 7;  // Princess choice 1
+
 
 // Initialize LEDs
-const int ledRed1 = 6;
-const int ledRed2 = 7;
-const int ledGreen = 8;
+const int ledRed1 = 8;
+const int ledRed2 = 9;
+const int ledGreen = 10;
 
 // Initialize variables to track positions and choices
 bool Farquaad_Position = false;
 bool Gingerbread_Position = false;
-String Princess_Choice = "none";
 
 // Initialize Servos
 Servo tableServo;    // Reveal table
@@ -27,7 +29,10 @@ void setup() {
   pinMode(switchPin1, INPUT);
   pinMode(switchPin2, INPUT);
   pinMode(switchPin3, INPUT);
-  pinMode(princessChoicePin, INPUT);
+  pinMode(switchPin4, INPUT);
+  pinMode(switchPin5, INPUT);
+  pinMode(switchPin6, INPUT);
+
 
   // Set up LEDs as outputs
   pinMode(ledRed1, OUTPUT);
@@ -35,10 +40,10 @@ void setup() {
   pinMode(ledGreen, OUTPUT);
 
   // Attach servos to their respective pins
-  tableServo.attach(9);     // Servo pin 9
-  mirrorServo.attach(10);    // Servo pin 10
-  flapServo.attach(11);      // Servo pin 11
-  fireworkServo.attach(12);       // Servo pin 12
+  tableServo.attach(11);     // Servo pin 9
+  mirrorServo.attach(12);    // Servo pin 10
+  flapServo.attach(13);      // Servo pin 11
+  fireworkServo.attach(14);       // Servo pin 12
 
   // Initialize all components to default positions
   tableServo.write(0);
@@ -61,4 +66,6 @@ void loop() {
   switchVal4 = digitalRead(switchPin4);
   switchVal5 = digitalRead(switchPin5);
   switchVal6 = digitalRead(switchPin6);
+
+  
 }
