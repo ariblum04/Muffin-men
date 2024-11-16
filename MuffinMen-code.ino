@@ -1,5 +1,10 @@
 #include <Servo.h>
 
+//Variable for reading the switch status
+int switchState1 = 0;
+int switchState2 = 0;
+int switchState3 = 0;
+
 // Initialize switches
 const int switchPin1 = 2;  // Farquaad circle
 const int switchPin2 = 3;  // Gingerbread in trash
@@ -40,10 +45,10 @@ void setup() {
   pinMode(ledGreen, OUTPUT);
 
   // Attach servos to their respective pins
-  tableServo.attach(11);     // Servo pin 9
+  tableServo.attach(13);     // Servo pin 9
   mirrorServo.attach(12);    // Servo pin 10
-  flapServo.attach(13);      // Servo pin 11
-  fireworkServo.attach(14);       // Servo pin 12
+  flapServo.attach(11);      // Servo pin 11
+  fireworkServo.attach(10);       // Servo pin 12
 
   // Initialize all components to default positions
   tableServo.write(0);
@@ -60,9 +65,30 @@ void setup() {
 }
 
 void loop() {
-  switchVal1 = digitalRead(switchPin1);
-  switchVal2 = digitalRead(switchPin2);
-  switchVal3 = digitalRead(switchPin3);
+  //if farquaad is placed by the table the table drops
+  switchState1 = digitalRead(switchPin1);
+  if (switchPin1 == HIGH){
+    tableServo.write(90); //should rotate 90 degrees
+  } else {
+    tableServo.write(0);
+  }
+
+  //if the gingerbreadman is placed in trash the mirror spins
+  switchState2 = digitalRead(switchPin2);
+  if (switchPin2 == HIGH){
+    mirrorServo.write(180);
+  } else {
+    mirrorServo.write(0);
+  }
+
+  //if farquaad is placed by the mirror, the secret pannel opens
+  switchState3 = digitalRead(switchPin3);
+  if (switchPin3 == HIGH){
+    flapServo.write((90);
+  } else {
+    flapServo.write(0);
+  }
+  
   switchVal4 = digitalRead(switchPin4);
   switchVal5 = digitalRead(switchPin5);
   switchVal6 = digitalRead(switchPin6);
