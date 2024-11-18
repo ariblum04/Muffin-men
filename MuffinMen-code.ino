@@ -4,6 +4,9 @@
 int switchState1 = 0;
 int switchState2 = 0;
 int switchState3 = 0;
+int switchState4 = 0;
+int switchState5 = 0;
+int switchState6 = 0;
 
 // Initialize switches
 const int switchPin1 = 2;  // Farquaad circle
@@ -27,7 +30,7 @@ bool Gingerbread_Position = false;
 Servo tableServo;    // Reveal table
 Servo mirrorServo;   // Rotate mirror
 Servo flapServo;     // Spin up flap
-Servo fireworkServo;      // Flip up fireworks
+Servo ringServo;      // Flip up fireworks
 
 void setup() {
   // Set up switches as inputs
@@ -45,16 +48,16 @@ void setup() {
   pinMode(ledGreen, OUTPUT);
 
   // Attach servos to their respective pins
-  tableServo.attach(13);     // Servo pin 9
-  mirrorServo.attach(12);    // Servo pin 10
-  flapServo.attach(11);      // Servo pin 11
-  fireworkServo.attach(10);       // Servo pin 12
+  tableServo.attach(8);     // Servo pin 9
+  mirrorServo.attach(9);    // Servo pin 10
+  flapServo.attach(10);      // Servo pin 11
+  ringServo.attach(11);       // Servo pin 12
 
   // Initialize all components to default positions
   tableServo.write(0);
   mirrorServo.write(0);
   flapServo.write(0);
-  fireworkServo.write(0);
+  ringServo.write(0);
 
   // Initialize LEDs as off
   digitalWrite(ledRed1, LOW);
@@ -84,14 +87,37 @@ void loop() {
   //if farquaad is placed by the mirror, the secret pannel opens
   switchState3 = digitalRead(switchPin3);
   if (switchPin3 == HIGH){
-    flapServo.write((90);
+    flapServo.write(90);
   } else {
     flapServo.write(0);
   }
   
-  switchVal4 = digitalRead(switchPin4);
-  switchVal5 = digitalRead(switchPin5);
-  switchVal6 = digitalRead(switchPin6);
+//   //if farquaad is on the wrong princess (snow white)
+//   switchState4 = digitalRead(switchPin4);
+//   if (switchState4 == HIGH){
+//     digitalWrite(ledRed1, HIGH);
+//   } else {
+//     digitalWrite(ledRed1, LOW);
+//   }
 
+//   //if farquaad is on the wrong princess (aurora)
+//   switchState5 = digitalRead(switchPin5);
+//   if (switchState5 == HIGH){
+//     digitalWrite(ledRed2, HIGH);
+//   } else {
+//     digitalWrite(ledRed2, LOW);
+//   }
+  
+//if farquaad is on the right princess
+  switchState6 = digitalRead(switchPin6);
+  if (switchState6 == HIGH){
+    digitalWrite(ledGreen, HIGH);
+    ringServo.write(90);
+  } else {
+    digitalWrite(ledGreen, LOW);
+    ringServo.write(0);
+  }
+
+  
   
 }
