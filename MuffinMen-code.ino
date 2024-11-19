@@ -1,123 +1,95 @@
 #include <Servo.h>
 
-//Variable for reading the switch status
-int switchState1 = 0;
-int switchState2 = 0;
-int switchState3 = 0;
-int switchState4 = 0;
-int switchState5 = 0;
-int switchState6 = 0;
+// Variables for tracking placement
+bool farquadPlace1 = false;
+bool gingerbreadPlace = false;
+bool farquadPlace2 = false;
+bool farquadPlace3 = false;
 
 // Initialize switches
-const int switchPin1 = 2;  // Farquaad circle
-const int switchPin2 = 3;  // Gingerbread in trash
-const int switchPin3 = 4;  // Farquaad at mirror
-const int switchPin4 = 5;  // Princess choice 1
-const int switchPin5 = 6;  // Princess choice 1
-const int switchPin6 = 7;  // Princess choice 1
-
-
-// Initialize LEDs
-const int ledRed1 = 8;
-const int ledRed2 = 9;
-const int ledGreen = 10;
-
-// Initialize variables to track positions and choices
-bool Farquaad_Position = false;
-bool Gingerbread_Position = false;
+const int switchPin1 = 4;   // Farquaad start circle
+const int switchPin2 = 6;   // Gingerbread in trash
+const int switchPin3 = 8;   // Farquad mirror circle
+const int switchPin4 = 9;  // Farquad final spot
 
 // Initialize Servos
-Servo tableServo;    // Reveal table
-Servo mirrorServo;   // Rotate mirror
-Servo flapServo;     // Spin up flap
-Servo ringServo;      // Flip up fireworks
+Servo tableServo;   // Table servo
+Servo mirrorServo;  // Mirror servo
+Servo flapServo;    // Flap servo
+Servo ringServo;    //ring servo
 
 void setup() {
-  // Set up switches as inputs
+  // Set up the switch pins as inputs
   pinMode(switchPin1, INPUT);
   pinMode(switchPin2, INPUT);
   pinMode(switchPin3, INPUT);
   pinMode(switchPin4, INPUT);
-  pinMode(switchPin5, INPUT);
-  pinMode(switchPin6, INPUT);
 
+  // Attach the servo motors to their pins
+  tableServo.attach(5);   // Table servo on pin 5
+  mirrorServo.attach(7);  // Mirror servo on pin 7
+  flapServo.attach(13);
+  ringServo.attach(12);
 
-  // Set up LEDs as outputs
-  pinMode(ledRed1, OUTPUT);
-  pinMode(ledRed2, OUTPUT);
-  pinMode(ledGreen, OUTPUT);
-
-  // Attach servos to their respective pins
-  tableServo.attach(8);     // Servo pin 9
-  mirrorServo.attach(9);    // Servo pin 10
-  flapServo.attach(10);      // Servo pin 11
-  ringServo.attach(11);       // Servo pin 12
-
-  // Initialize all components to default positions
+  // Initialize servos to default positions
   tableServo.write(0);
   mirrorServo.write(0);
   flapServo.write(0);
   ringServo.write(0);
 
-  // Initialize LEDs as off
-  digitalWrite(ledRed1, LOW);
-  digitalWrite(ledRed2, LOW);
-  digitalWrite(ledGreen, LOW);
-  
-  Serial.begin(9600); // For debugging
+  // Start serial communication for debugging
+  Serial.begin(9600);
 }
 
 void loop() {
-  //if farquaad is placed by the table the table drops
-  switchState1 = digitalRead(switchPin1);
-  if (switchPin1 == HIGH){
-    tableServo.write(90); //should rotate 90 degrees
-  } else {
-    tableServo.write(0);
+  // Check if the first switch has been activated (Farquaad on the table)
+  if (digitalRead(switchPin1) == HIGH) {
+    //Serial.println("ON1");
+    farquadPlace1 = true;  // Update the boolean for Farquaad's position
   }
 
-  //if the gingerbreadman is placed in trash the mirror spins
-  switchState2 = digitalRead(switchPin2);
-  if (switchPin2 == HIGH){
-    mirrorServo.write(180);
+  // Control the table servo based on Farquaad's placement
+  if (farquadPlace1) {
+    tableServo.write(70);  // Rotate the table servo to 70 degrees
   } else {
-    mirrorServo.write(0);
+    tableServo.write(0);  // Keep table servo at 0 degrees (original position)
   }
 
-  //if farquaad is placed by the mirror, the secret pannel opens
-  switchState3 = digitalRead(switchPin3);
-  if (switchPin3 == HIGH){
-    flapServo.write(90);
-  } else {
-    flapServo.write(0);
+  // Check if the second switch has been activated (Gingerbread in trash)
+  if (digitalRead(switchPin2) == HIGH) {
+    //Serial.println("ON2");
+    gingerbreadPlace = true;  // Update the boolean for Gingerbread's placement
   }
-  
-//   //if farquaad is on the wrong princess (snow white)
-//   switchState4 = digitalRead(switchPin4);
-//   if (switchState4 == HIGH){
-//     digitalWrite(ledRed1, HIGH);
-//   } else {
-//     digitalWrite(ledRed1, LOW);
-//   }
 
-//   //if farquaad is on the wrong princess (aurora)
-//   switchState5 = digitalRead(switchPin5);
-//   if (switchState5 == HIGH){
-//     digitalWrite(ledRed2, HIGH);
-//   } else {
-//     digitalWrite(ledRed2, LOW);
-//   }
-  
-//if farquaad is on the right princess
-  switchState6 = digitalRead(switchPin6);
-  if (switchState6 == HIGH){
-    digitalWrite(ledGreen, HIGH);
-    ringServo.write(90);
+  // Control the mirror servo if both conditions are true
+  if (gingerbreadPlace && farquadPlace1) {
+    mirrorServo.write(180);  // Rotate the mirror servo to 180 degrees
   } else {
-    digitalWrite(ledGreen, LOW);
+    mirrorServo.write(0);  // Keep the mirror servo at 0 degrees (original position)
+  }
+
+  // Check if the third switch has been activated (farquad in front of mirror)
+  if (digitalRead(switchPin3) == HIGH) {
+    //Serial.println("ON3");
+    farquadPlace2 = true;  // Update the boolean for Gingerbread's placement
+  }
+
+  // Control the mirror servo if both conditions are true
+  if (farquadPlace2 && gingerbreadPlace) {
+    flapServo.write(98);  // Rotate the mirror servo to 180 degrees
+  } else {
+    flapServo.write(0);  // Keep the mirror servo at 0 degrees (original position)
+  }
+
+    // Check if the third switch has been activated (farquad in front of mirror)
+  if (digitalRead(switchPin4) == HIGH) {
+    //Serial.println("ON4");
+    farquadPlace3 = true;  // Update the boolean for Gingerbread's placement
+  }
+
+  if (farquadPlace3 && farquadPlace2) {
+    ringServo.write(100);
+  } else {
     ringServo.write(0);
   }
-
-  
-  
 }
