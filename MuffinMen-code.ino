@@ -77,6 +77,8 @@ void loop() {
   // Control the mirror servo if both conditions are true
   if (farquadPlace2 && gingerbreadPlace) {
     flapServo.write(98);  // Rotate the mirror servo to 180 degrees
+    delay(50);
+    flapServo.write(0);
   } else {
     flapServo.write(0);  // Keep the mirror servo at 0 degrees (original position)
   }
