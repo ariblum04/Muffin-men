@@ -69,7 +69,7 @@ void loop() {
   }
 
   // Check if the third switch has been activated (farquad in front of mirror)
-  if (digitalRead(switchPin3) == HIGH) {
+  if (digitalRead(switchPin3) == HIGH && gingerbreadPlace) {
     //Serial.println("ON3");
     farquadPlace2 = true;  // Update the boolean for Gingerbread's placement
   }
