@@ -56,13 +56,13 @@ void loop() {
   }
 
   // Check if the second switch has been activated (Gingerbread in trash)
-  if (digitalRead(switchPin2) == HIGH) {
+  if (digitalRead(switchPin2) == HIGH && farquadPlace1) {
     //Serial.println("ON2");
     gingerbreadPlace = true;  // Update the boolean for Gingerbread's placement
   }
 
   // Control the mirror servo if both conditions are true
-  if (gingerbreadPlace && farquadPlace1) {
+  if (gingerbreadPlace) {
     mirrorServo.write(180);  // Rotate the mirror servo to 180 degrees
   } else {
     mirrorServo.write(0);  // Keep the mirror servo at 0 degrees (original position)
@@ -75,7 +75,7 @@ void loop() {
   }
 
   // Control the mirror servo if both conditions are true
-  if (farquadPlace2 && gingerbreadPlace) {
+  if (farquadPlace2) {
     flapServo.write(98);  // Rotate the mirror servo to 180 degrees
     delay(50);
     flapServo.write(0);
