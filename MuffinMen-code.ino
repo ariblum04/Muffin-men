@@ -90,7 +90,7 @@ void loop() {
   }
 
   if (farquadPlace3 && farquadPlace2) {
-    ringServo.write(100);
+    ringServo.write(90);
   } else {
     ringServo.write(0);
   }
