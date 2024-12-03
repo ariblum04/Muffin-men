@@ -1,3 +1,12 @@
+/* 
+Muffin Men - Once upon an arduino
+Team members - Ari Blumberg and Faith Griesbach
+
+In this program, each switch interaction on the arduino leads to the associated servo's movement. 
+This allows for a smooth transition from one portion of the enclosure to the next. 
+It does not allow for a switch to be activated before the previous switch has already been used.
+ */
+
 #include <Servo.h>
 
 // Variables for tracking placement
